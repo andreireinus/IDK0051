@@ -6,7 +6,6 @@ import java.util.List;
 import y2.game.Tile;
 import y2.game.cards.Card;
 import y2.game.cards.PrizeCard;
-import y2.game.cards.VitalityCard;
 import y2.game.exceptions.GameException;
 
 public class Player {
@@ -14,7 +13,7 @@ public class Player {
 	public Tile location;
 	
 	private int maxVitality = 3;
-	private int currentVitality = 3;
+	public int currentVitality = 3;
 	
 	private int maxCardsCount = 5;
 	public List<Card> cards = new ArrayList<Card>();
@@ -59,7 +58,10 @@ public class Player {
 		card.onPickedUp(this);
 		
 		location.removeCard(card);
-		cards.add(card);
+		
+		if (card.isStorable()) {
+			cards.add(card);
+		}
 	}
 
 	public Card getCardByName(String string) {

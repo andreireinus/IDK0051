@@ -13,6 +13,9 @@ public abstract class Card {
 		return getName().toLowerCase().equals(name.toLowerCase());
 	}
 	
+	public boolean isStorable() {
+		return true;
+	}
 	public void onPickedUp(Player owner) throws Exception {
 		
 	}
