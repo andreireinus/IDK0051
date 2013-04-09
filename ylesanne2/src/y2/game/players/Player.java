@@ -5,6 +5,7 @@ import java.util.List;
 
 import y2.game.Tile;
 import y2.game.cards.Card;
+import y2.game.cards.PrizeCard;
 import y2.game.cards.VitalityCard;
 import y2.game.exceptions.GameException;
 
@@ -85,9 +86,17 @@ public class Player {
 	public void modifyMaxVitality(int mod) {
 		this.currentVitality = Math.max(0, currentVitality + mod);
 		this.maxVitality = maxVitality + mod;
-		
 	}
 
+	public int getPoints() {
+		int points = 0;
+		for (Card card : cards) {
+			if (PrizeCard.class.isInstance(card)) {
+				points++;
+			}
+		}
+		return points;
+	}
 
 	
 }

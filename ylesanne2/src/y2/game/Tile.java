@@ -60,6 +60,10 @@ public class Tile {
 		return "(" + name + ":" + players + ")";
 	}
 	
+	public boolean canEnter(Player player) {
+		return true;
+	}
+	
 	public void addCard(Card card) {
 		cards.add(card);
 	}
