@@ -16,7 +16,7 @@ public class Player {
 	private int currentVitality = 3;
 	
 	private int maxCardsCount = 5;
-	private List<Card> cards = new ArrayList<Card>();
+	public List<Card> cards = new ArrayList<Card>();
 	
 	public Player(String name, Tile location) {
 		this.name = name;
@@ -70,7 +70,7 @@ public class Player {
 		return null;
 	}
 	
-	public void drop(Card card) {
+	public void drop(Card card) throws Exception {
 		card.onDropped(this);
 		cards.remove(card);
 		location.addCard(card);

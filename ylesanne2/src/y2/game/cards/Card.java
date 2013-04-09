@@ -13,10 +13,11 @@ public abstract class Card {
 		return getName().toLowerCase().equals(name.toLowerCase());
 	}
 	
-	public void onPickedUp(Player owner) {
+	public void onPickedUp(Player owner) throws Exception {
 		
 	}
-	public void onDropped(Player owner) {
+	
+	public void onDropped(Player owner) throws Exception {
 		
 	}
 }
