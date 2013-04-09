@@ -7,6 +7,7 @@ import y2.game.Tile;
 import y2.game.cards.Card;
 import y2.game.cards.PrizeCard;
 import y2.game.exceptions.GameException;
+import y2.game.exceptions.TooManyCardsException;
 
 public class Player {
 	public String name;
@@ -53,7 +54,7 @@ public class Player {
 
 	public void pickUp(Card card) throws Exception {
 		if (cards.size() >= maxCardsCount) {
-			throw new GameException("Liiga palju kaarte");
+			throw new TooManyCardsException();
 		}
 		card.onPickedUp(this);
 		

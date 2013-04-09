@@ -75,5 +75,9 @@ public class Tile {
 	public void removeCard(Card card) {
 		cards.remove(card);
 	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
 	
 }

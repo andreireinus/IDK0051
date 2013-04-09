@@ -1,5 +1,6 @@
 package y2.game.cards;
 
+import y2.game.exceptions.GameException;
 import y2.game.players.Player;
 
 public abstract class Card {
@@ -16,11 +17,11 @@ public abstract class Card {
 	public boolean isStorable() {
 		return true;
 	}
-	public void onPickedUp(Player owner) throws Exception {
+	public void onPickedUp(Player owner) throws GameException, Exception {
 		
 	}
 	
-	public void onDropped(Player owner) throws Exception {
+	public void onDropped(Player owner) throws GameException {
 		
 	}
 }

@@ -5,7 +5,7 @@ import y2.game.players.Player;
 
 public class StickyCard extends ActionCard {
 	@Override
-	public void onDropped(Player owner) throws Exception {
+	public void onDropped(Player owner) throws GameException {
 		throw new GameException("I wont leave you, evar!");
 	}
 }
