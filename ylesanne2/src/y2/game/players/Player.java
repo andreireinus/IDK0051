@@ -4,101 +4,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 import y2.game.Tile;
-import y2.game.cards.*;
-/**
- * 
- * { type: "$y2.game.players.Player", value: {name: "Andrei", tile: {"}} }
- * 
- * @author Andrei
- *
- */
+import y2.game.cards.Card;
+import y2.game.cards.VitalityCard;
+import y2.game.exceptions.GameException;
+
 public class Player {
-	private String name;
-	private Tile tile;
-	private ArrayList<Card> cards = new ArrayList<Card>();
+	public String name;
+	public Tile location;
 	
-	private int baseVitality = 3;
-	private int usedVitality = 0;
+	private int maxVitality = 3;
+	private int currentVitality = 3;
 	
+	private int maxCardsCount = 5;
+	private List<Card> cards = new ArrayList<Card>();
 	
-	public Player (String name, Tile tile) {
+	public Player(String name, Tile location) {
 		this.name = name;
-		this.tile = tile;
+		location.enter(this);
 	}
 	
-	public List<String> move(Tile tile) throws Exception {
-		this.tile = tile;
-		this.usedVitality++;
-		
-		return tile.enter(this);
-		
+	public Player forward() throws Exception {
+		return move(location.getNext());
 	}
 	
-	public List<String> previous() throws Exception {
-		return move(this.tile.getPrevious());
-	}
+	public Player previous() throws Exception {
+		return move(location.getPrevious());
+	}	
 	
-	public List<String> next() throws Exception {
-		return move(this.tile.getNext());
+	public Player move(Tile to) throws Exception {
+		if (to != null) {
+			if (currentVitality <= 0) {
+				throw new GameException("I am too tired to move");
+			}
+			location.leave(this);
+			to.enter(this);
+			currentVitality--;
+		}
+		return this;
 	}
 	
 	public void sleep() {
-		this.usedVitality = 0;
+		currentVitality = maxVitality;
 	}
 	
-	public String getName() {
-		return this.name;
+	public String toString() {
+		return name;
 	}
-	
-	public int getMaxVitality() {
-		int vitality = baseVitality;
 
-		for (Card card : cards) {
-			if (card instanceof VitalityCard) {
-				vitality++;
-			}
+	public void pickUp(Card card) throws Exception {
+		if (cards.size() >= maxCardsCount) {
+			throw new GameException("Liiga palju kaarte");
 		}
-		
-		return vitality;
-	}
-	
-	public int getVitality() {
-		return getMaxVitality() - usedVitality;
-	}
-	
-	public void pickUp(Card card) {
-		// TODO - kaartide hulk, mida võib käes olla
+		if (card instanceof VitalityCard) {
+			maxVitality++;
+			currentVitality++;
+		}
+		location.removeCard(card);
 		cards.add(card);
 	}
-	
-	public void drop(Card card) {
-		tile.addCard(card);
-		cards.remove(card);
-	}
-	
-	public List<Card> getCards() {
-		return cards;
-	}
-	public Card getCardByName(String name) throws Exception {
+
+	public Card getCardByName(String string) {
 		for (Card card : cards) {
-			if (card.getName().equals(name))
-			{
+			if (card.equals(string)) {
 				return card;
 			}
 		}
-		
-		throw new Exception("Kaarti ei leitud");
+		return null;
 	}
 	
-	public String onInteract(Player interactee) {
-		return "Tere " + interactee.getName();
+	public void drop(Card card) {
+		if (card instanceof VitalityCard) {
+			maxVitality--;
+			currentVitality--;
+		}
+		cards.remove(card);
+		location.addCard(card);
 	}
-	public String interactWith(Player player) {
-		return player.onInteract(this);
-	}
+	
+
+
 	public String lookAt(Player player) throws Exception {
-		return "";
+		return null;
 	}
-	
+
+
 	
 }
+
+

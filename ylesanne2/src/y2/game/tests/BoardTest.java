@@ -12,23 +12,23 @@ public class BoardTest {
 	@Test
 	public void testGetstart() {
 		Board b = new Board();
-		assertNull(b.getstart());
+		assertNull(b.getStart());
 		
 		b.append(new Tile("test"));
-		assertNotNull(b.getstart());
+		assertNotNull(b.getStart());
 	}
 
 	@Test
 	public void testAppend() {
 		Board b = new Board();
 		b.append(new Tile("1"));
-		assertEquals(1, getBoardLength(b.getstart()));
+		assertEquals(1, getBoardLength(b.getStart()));
 		b.append(new Tile("2"));
-		assertEquals(2, getBoardLength(b.getstart()));
+		assertEquals(2, getBoardLength(b.getStart()));
 		b.append(new Tile("3"));
-		assertEquals(3, getBoardLength(b.getstart()));
+		assertEquals(3, getBoardLength(b.getStart()));
 		b.append(new Tile("4"));
-		assertEquals(4, getBoardLength(b.getstart()));
+		assertEquals(4, getBoardLength(b.getStart()));
 	}
 	
 	

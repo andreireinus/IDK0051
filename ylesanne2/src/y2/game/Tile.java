@@ -9,84 +9,67 @@ import y2.game.players.Player;
 
 public class Tile {
 	private String name;
-	
 	private Board board;
 	private Tile previous;
 	private Tile next;
-	
-	private ArrayList<Player> players = new ArrayList<Player>();
-	private ArrayList<Card> cards = new ArrayList<Card>();
-	
+		
+	private List<Player> players = new ArrayList<Player>();
+	private List<Card> cards = new ArrayList<Card>();
+
 	public Tile(String name) {
 		this.name = name;
 	}
 
-	public void addCard(Card card) {
-		cards.add(card);
+	public void enter(Player p) {
+		players.add(p);
+		p.location = this;
 	}
 	
-	public Card getFirstCard() throws Exception {
-		if (cards.isEmpty()) {
-			throw new Exception("Pole kaarte");
-		}
-		
-		Iterator<Card> i = cards.iterator();
-		Card card = i.next();
-		cards.remove(card);
-		return card;
+	public void leave(Player p) {
+		players.remove(p);
+		p.location = null;
+	}	
+	
+	public Tile getPrevious() {
+		return previous;
 	}
 	
+	public Tile getNext() {
+		return next;
+	}
 
-	public List<String> enter(Player player) throws Exception {
-		ArrayList<String> messages = new ArrayList<String>();
-		
-		players.add(player);
-		
-		for (Player p : players) {
-			if (p.equals(player)) {
-				continue;
-			}
-			
-			String message = player.lookAt(p);
-			if (message.length() > 0) {
-				messages.add(message);
-			}
-		}
-		
-		return messages;
+	public void setNext(Tile t) {
+		this.next = t;
+		t.previous = this;
 	}
 	
-	/// Getters -- Setters ///
-	public String getName() {
-		return name;
+	public void setPrevious(Tile t) {
+		this.previous = t;
+		t.next = this;
+	}
+	
+	public void setBoard(Board b) {
+		board = b;
 	}
 	
 	public Board getBoard() {
 		return board;
 	}
+		
+	public String toString() {
+		return "(" + name + ":" + players + ")";
+	}
 	
-	public void setBoard(Board board) {
-		this.board = board;
+	public void addCard(Card card) {
+		cards.add(card);
 	}
-
-	public Tile getPrevious() {
-		return previous;
-	}
-
-	public void setPrevious(Tile previous) {
-		this.previous = previous;
-	}
-
-	public Tile getNext() {
-		return next;
-	}
-
-	public void setNext(Tile next) {
-		this.next = next;
-	}
-
 	
-	
-	
+	public Card getFirstCard() {
+		return cards.get(0);
+	}
+
+	public void removeCard(Card card) {
+		cards.remove(card);
+	}
 	
 }
