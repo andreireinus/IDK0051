@@ -55,10 +55,8 @@ public class Player {
 		if (cards.size() >= maxCardsCount) {
 			throw new GameException("Liiga palju kaarte");
 		}
-		if (card instanceof VitalityCard) {
-			maxVitality++;
-			currentVitality++;
-		}
+		card.onPickedUp(this);
+		
 		location.removeCard(card);
 		cards.add(card);
 	}
@@ -73,10 +71,7 @@ public class Player {
 	}
 	
 	public void drop(Card card) {
-		if (card instanceof VitalityCard) {
-			maxVitality--;
-			currentVitality--;
-		}
+		card.onDropped(this);
 		cards.remove(card);
 		location.addCard(card);
 	}
@@ -85,6 +80,12 @@ public class Player {
 
 	public String lookAt(Player player) throws Exception {
 		return null;
+	}
+
+	public void modifyMaxVitality(int mod) {
+		this.currentVitality = Math.max(0, currentVitality + mod);
+		this.maxVitality = maxVitality + mod;
+		
 	}
 
 
