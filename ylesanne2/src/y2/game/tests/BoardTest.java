@@ -1,16 +1,15 @@
 package y2.game.tests;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import y2.game.Board;
 import y2.game.Tile;
+
+import static org.junit.Assert.*;
 
 public class BoardTest {
 
 	@Test
-	public void testGetstart() {
+	public void testGetStart() {
 		Board b = new Board();
 		assertNull(b.getStart());
 		
